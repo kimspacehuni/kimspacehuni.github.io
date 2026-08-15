@@ -10,20 +10,55 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 
+    <script>
+        // Apply saved/system theme before render to avoid a flash
+        (function () {
+            document.documentElement.classList.add('js');
+            try {
+                var saved = localStorage.getItem('theme');
+                var theme = saved || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {}
+        })();
+    </script>
+
     <style>
-        body { font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Verdana, Helvetica, sans-serif; font-size: 14px; line-height: 1.6; color: #444; background-color: #fff; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        a { color: #1772d0; text-decoration: none; }
-        a:hover { color: #f09228; text-decoration: none; }
+        :root {
+            --bg: #ffffff; --text: #444444; --muted: #888888;
+            --link: #1772d0; --link-hover: #f09228;
+            --border: #bbbbbb; --card-hover: #f6f6f6;
+        }
+        :root[data-theme="dark"] {
+            --bg: #1a1a1a; --text: #c9c9c9; --muted: #8a8a8a;
+            --link: #6ab0f3; --link-hover: #f0a860;
+            --border: #444444; --card-hover: #262626;
+        }
+        html { color-scheme: light dark; }
+        body { font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Verdana, Helvetica, sans-serif; font-size: 14px; line-height: 1.6; color: var(--text); background-color: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; transition: background-color .3s ease, color .3s ease; }
+        a { color: var(--link); text-decoration: none; }
+        a:hover { color: var(--link-hover); text-decoration: none; }
         name { font-size: 32pt; font-weight: 700; }
         .highlight { background-color: #ffffd0; }
-        h2 { font-size: 22px; margin-top: 30px; border-bottom: 1px solid #bbb; padding-bottom: 10px; }
+        h2 { font-size: 22px; margin-top: 30px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         .papertitle { font-weight: 700; }
         img { max-width: 100%; height: auto; }
 
         /* Honor the specified column widths regardless of image size */
         .header-table, .entry-table, .news-table { table-layout: fixed; }
         .news-table td { padding: 5px 20px; vertical-align: top; }
-        .news-date { color: #888; white-space: nowrap; }
+        .news-date { color: var(--muted); white-space: nowrap; }
+
+        /* Hover highlight on publication / project rows */
+        .entry-table tbody tr { transition: background-color .2s ease; }
+        .entry-table tbody tr:hover { background-color: var(--card-hover); }
+
+        /* Dark-mode toggle button */
+        #theme-toggle { position: fixed; top: 14px; right: 14px; z-index: 100; width: 38px; height: 38px; border: 1px solid var(--border); border-radius: 50%; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1; cursor: pointer; transition: border-color .2s ease, background-color .3s ease; }
+        #theme-toggle:hover { border-color: var(--link); }
+
+        /* Scroll reveal — gated on .js so no-JS users still see everything */
+        .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+        .js .reveal.visible { opacity: 1; transform: none; }
 
         /* Mobile layout: stack table cells into a single column */
         @media (max-width: 600px) {
@@ -65,6 +100,7 @@
 </head>
 
 <body>
+<button id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
 <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
     <tbody>
     <tr style="padding:0px">
@@ -91,8 +127,8 @@
                 </tbody>
             </table>
 
-            <h2 style="margin-left:20px;margin-right:20px">News</h2>
-            <table class="news-table" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <h2 class="reveal" style="margin-left:20px;margin-right:20px">News</h2>
+            <table class="news-table reveal" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
                 <tbody>
                 <tr>
                     <td class="news-date" style="width:16%"><b>2026.04</b></td>
@@ -102,14 +138,10 @@
                     <td class="news-date"><b>2026.02</b></td>
                     <td>Our paper <em>Adaptive Capacity Allocation for VLA Fine-tuning</em> was accepted to <b>ICRA 2026</b>.</td>
                 </tr>
-                <tr>
-                    <td class="news-date"><b>2026.05</b></td>
-                    <td>Submitted <em>HeLM</em> to <b>CoRL 2026</b> (under review).</td>
-                </tr>
                 </tbody>
             </table>
 
-            <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <table class="reveal" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
                 <tbody>
                 <tr>
                     <td style="padding:20px;width:100%;vertical-align:middle">
@@ -125,8 +157,8 @@
                 </tbody>
             </table>
 
-            <h2 style="margin-left:20px;margin-right:20px">Publications</h2>
-            <table class="entry-table" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <h2 class="reveal" style="margin-left:20px;margin-right:20px">Publications</h2>
+            <table class="entry-table reveal" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
                 <tbody>
                 <tr>
                     <td class="thumb-cell" style="padding:16px;width:20%;vertical-align:middle">
@@ -161,8 +193,8 @@
                 </tbody>
             </table>
 
-            <h2 style="margin-left:20px;margin-right:20px">Projects</h2>
-            <table class="entry-table" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <h2 class="reveal" style="margin-left:20px;margin-right:20px">Projects</h2>
+            <table class="entry-table reveal" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
                 <tbody>
                 <tr>
                     <td class="thumb-cell" style="padding:20px;width:25%;vertical-align:middle"><img src="images/project_thumb.png" width="100%"></td>
@@ -185,10 +217,42 @@
 </table>
 
 <!-- MapMyVisitors -->
-<hr style="max-width:800px;margin:40px auto 0 auto;border:0;border-top:1px solid #bbb;">
+<hr style="max-width:800px;margin:40px auto 0 auto;border:0;border-top:1px solid var(--border);">
 <div style="max-width:300px;margin:24px auto 30px auto;text-align:center;">
-    <div style="font-size:12px;color:#999;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Visitors</div>
+    <div style="font-size:12px;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Visitors</div>
     <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=quiR02l1MkoDcJCKZmpUF4omLjznc_PR_DbnAWSdXb4&cl=ffffff&w=a"></script>
 </div>
+
+<script>
+    (function () {
+        // Dark-mode toggle
+        var btn = document.getElementById('theme-toggle');
+        function setIcon() {
+            var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+            btn.textContent = dark ? '☀️' : '🌙';
+        }
+        setIcon();
+        btn.addEventListener('click', function () {
+            var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+            var next = dark ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (e) {}
+            setIcon();
+        });
+
+        // Scroll reveal
+        var els = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (en.isIntersecting) { en.target.classList.add('visible'); obs.unobserve(en.target); }
+                });
+            }, { threshold: 0.08 });
+            els.forEach(function (el) { obs.observe(el); });
+        } else {
+            els.forEach(function (el) { el.classList.add('visible'); });
+        }
+    })();
+</script>
 </body>
 </html>
