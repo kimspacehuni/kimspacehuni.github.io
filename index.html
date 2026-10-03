@@ -164,7 +164,10 @@
                     <td style="padding:20px;width:100%;vertical-align:middle">
                         <h2>Research Focus</h2>
                         <p>
-                            My goal is to build robots that can perceive and interact with the physical world as robustly as humans do. I am currently exploring <b>Vision-Language Models (VLMs)</b> for robotic control and <b>Reinforcement Learning</b> under physical constraints. 
+                            I view the generalization failure of current robot foundation models as a <b>context uncertainty</b> problem: when the current observation is insufficient for action selection, a robot must maintain, retrieve, and translate task-relevant context into guidance that a low-level policy can execute. Vision-language-action (VLA) models inherit broad visual and semantic knowledge from pretrained VLMs, but this knowledge is not always grounded in a form that supports reliable action generation after robot-data fine-tuning.
+                        </p>
+                        <p>
+                            To address this, I study <b>hierarchical VLM–VLA systems</b>, in which a VLM-based high-level policy keeps track of task progress, episodic memory, and embodiment-specific context, reasons about the uncertainty of the current situation, and provides structured guidance to a low-level VLA policy. My work has progressed from real-world VLA deployment, through capacity allocation for VLA fine-tuning and action-level subtask discovery, to explicit language memory for non-Markovian manipulation. Going forward, I am interested in <b>agentic VLMs</b> that decide what to remember, what to retrieve, and how to guide the VLA, choosing among text memory, keyframe retrieval, visual traces, keypoints, or latent guidance as the situation demands.
                             <!-- The fundamental problem I address is:
                             <br><br>
                             $$\min_{\theta} \mathbb{E}_{\tau \sim \pi_{\theta}} \left[ \sum_{t=0}^{T} \gamma^t R(s_t, a_t) \right]$$ -->
@@ -186,10 +189,10 @@
                         <br>
                         <strong>Gyeonghun Kim</strong>, et al.
                         <br>
-                        <em>CoRL 2026, Under Review</em>
+                        <em>ICRA 2027, Under Review</em>
                         <br>
-                        <a href="https://kimspacehuni.github.io/HeLM/">Project Page</a> / <a href="https://github.com/kimspacehuni/HeLM">GitHub</a>
-                        <p>Proposed hierarchical VLA framework with language memory; achieved 13% success rate improvement in real-world non-Markovian tasks.</p>
+                        <a href="https://kimspacehuni.github.io/HeLM/">Project Page</a> / <a href="https://github.com/kimspacehuni/HeLM">Code</a>
+                        <p>Many manipulation tasks are non-Markovian: the current observation alone is not enough to choose the right action, so the robot must remember what has already happened. HeLM is a hierarchical framework in which a VLM-based high-level policy maintains an explicit language memory of task progress and episodic context through an event-triggered update mechanism, and uses it to guide a low-level VLA policy. Using language as the memory keeps it compact and interpretable, and HeLM improves success rate by 13% on real-world non-Markovian tasks. I led the problem formulation, memory design, task suite, and experimental analysis.</p>
                         <div class="tags"><span class="tag">VLA</span><span class="tag">Language Memory</span><span class="tag">Non-Markovian</span><span class="tag">Qwen2.5-VL</span></div>
                     </td>
                 </tr>
@@ -198,14 +201,14 @@
                         <img src="images/paper2_thumb.png" width="100%">
                     </td>
                     <td class="desc-cell" style="padding:20px;width:80%;vertical-align:middle">
-                        <a href="https://github.com/dhkim-furiosa/LoRA-SP?tab=readme-ov-file"><span class="papertitle">Adaptive Capacity Allocation for Vision Language Action Fine-tuning</span></a>
+                        <a href="https://dhkim-furiosa.github.io/LoRA-SP/"><span class="papertitle">Adaptive Capacity Allocation for Vision Language Action Fine-tuning</span></a>
                         <br>
                         Donghoon Kim, Minji Bae, <a href="https://ungungnam.github.io/">Unghui Nam</a>, <strong>Gyeonghun Kim</strong>, Suyun Lee, Kyuhong Shim, Byonghyo Shim
                         <br>
                         <em>ICRA 2026, Accepted</em>
                         <br>
-                        <a href="https://github.com/dhkim-furiosa/LoRA-SP?tab=readme-ov-file">GitHub</a> / <a href="https://arxiv.org/abs/2603.07404">arXiv</a>
-                        <p>Contributed to experiments, implementation, and data pipeline for VLA-based robotic control. Rank-adaptive LoRA achieving 23.3% improvement over baseline on π₀ model.</p>
+                        <a href="https://dhkim-furiosa.github.io/LoRA-SP/">Project Page</a> / <a href="https://github.com/dhkim-furiosa/LoRA-SP?tab=readme-ov-file">Code</a> / <a href="https://arxiv.org/abs/2603.07404">arXiv</a>
+                        <p>When VLA models are fine-tuned for unseen embodiments or multiple tasks, the adaptation capacity they need depends on the task and the robot, so a fixed fine-tuning recipe becomes a bottleneck. This work proposes a rank-adaptive LoRA that allocates capacity according to task and embodiment demands, achieving a 23.3% improvement over the baseline on π₀. I contributed to the empirical core of the paper: experiment design, the training and evaluation pipeline, running VLA fine-tuning experiments, result analysis, and writing the experimental section.</p>
                         <div class="tags"><span class="tag">LoRA</span><span class="tag">PEFT</span><span class="tag">π₀</span><span class="tag">VLA</span></div>
                     </td>
                 </tr>
