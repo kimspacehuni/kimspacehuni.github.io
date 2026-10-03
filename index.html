@@ -192,7 +192,7 @@
                         <em>ICRA 2027, Under Review</em>
                         <br>
                         <a href="https://kimspacehuni.github.io/HeLM/">Project Page</a> / <a href="https://github.com/kimspacehuni/HeLM">Code</a>
-                        <p>Many manipulation tasks are non-Markovian: the current observation alone is not enough to choose the right action, so the robot must remember what has already happened. HeLM is a hierarchical framework in which a VLM-based high-level policy maintains an explicit language memory of task progress and episodic context through an event-triggered update mechanism, and uses it to guide a low-level VLA policy. Using language as the memory keeps it compact and interpretable, and HeLM improves success rate by 13% on real-world non-Markovian tasks. I led the problem formulation, memory design, task suite, and experimental analysis.</p>
+                        <p>To tackle non-Markovian manipulation, where the current observation alone is insufficient for action selection, HeLM uses a VLM-based high-level policy that maintains an explicit language memory of task progress and guides a low-level VLA policy. It improves success rate by 13% on real-world non-Markovian tasks.</p>
                         <div class="tags"><span class="tag">VLA</span><span class="tag">Language Memory</span><span class="tag">Non-Markovian</span><span class="tag">Qwen2.5-VL</span></div>
                     </td>
                 </tr>
@@ -208,7 +208,7 @@
                         <em>ICRA 2026, Accepted</em>
                         <br>
                         <a href="https://dhkim-furiosa.github.io/LoRA-SP/">Project Page</a> / <a href="https://github.com/dhkim-furiosa/LoRA-SP?tab=readme-ov-file">Code</a> / <a href="https://arxiv.org/abs/2603.07404">arXiv</a>
-                        <p>When VLA models are fine-tuned for unseen embodiments or multiple tasks, the adaptation capacity they need depends on the task and the robot, so a fixed fine-tuning recipe becomes a bottleneck. This work proposes a rank-adaptive LoRA that allocates capacity according to task and embodiment demands, achieving a 23.3% improvement over the baseline on π₀. I contributed to the empirical core of the paper: experiment design, the training and evaluation pipeline, running VLA fine-tuning experiments, result analysis, and writing the experimental section.</p>
+                        <p>To address the adaptation bottleneck of fine-tuning VLA models for unseen embodiments and multi-task learning, we propose a rank-adaptive LoRA that allocates capacity according to task and embodiment demands. It achieves a 23.3% improvement over the baseline on π₀.</p>
                         <div class="tags"><span class="tag">LoRA</span><span class="tag">PEFT</span><span class="tag">π₀</span><span class="tag">VLA</span></div>
                     </td>
                 </tr>
@@ -228,7 +228,7 @@
                         <em>Course Project, Stochastic Reinforcement Learning, SNU, 2025</em>
                         <br>
                         <a href="data/StochRL_Final_Project_HRL-LoRA.pdf">PDF</a>
-                        <p>Proposed a hierarchical framework that discovers robotic subtasks without manual supervision by attaching independent LoRA experts to a frozen VLA backbone (π₀) and training a PPO router to select experts. Introduced a consistency-aware reward to induce temporally coherent, interpretable subtask segmentation, and showed that entropy regularization is critical to avoid degenerate routing collapse.</p>
+                        <p>Proposed a hierarchical framework that discovers robotic subtasks without manual supervision by attaching independent LoRA experts to a frozen VLA backbone (π₀) and training a PPO router to select experts. To make the discovered subtasks meaningful, I further introduced a consistency-aware reward that induces temporally coherent, interpretable subtask segmentation, and showed that entropy regularization is critical to avoid degenerate routing collapse.</p>
                         <div class="tags"><span class="tag">Hierarchical RL</span><span class="tag">PPO</span><span class="tag">LoRA</span><span class="tag">π₀</span></div>
                     </td>
                 </tr>
